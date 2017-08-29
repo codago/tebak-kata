@@ -12,18 +12,20 @@ console.log('Selamat datang di permainan Tebak Kata, silahkan isi dengan jawaban
 var dataJson = JSON.parse(fs.readFileSync('data.json'));
 var next = 0
 
-rl.setPrompt("soal: " + dataJson[next].definition + "\nJawaban: ");
+rl.setPrompt(`soal:   ${dataJson[next].definition}  \nJawaban: `);
 rl.prompt();
 
 rl.on('line', (answer) => {
-  if(dataJson.length-1 > next){ //karna pertanyaannya ada 4 saja(index=3), dan karna ada next++, dia harus distop dengan -1
-    if(answer.trim().toLowerCase() == dataJson[next].term.toLowerCase()){
-      console.log('damn you are right!! There are another questions tho ');
-      next++;
-      rl.setPrompt("soal: " + dataJson[next].definition + "\nJawaban: ");
-    } else {
-      console.log('salah');
-    }
+  //karna pertanyaannya ada 4 saja(index=3), dan karna ada next++, dia harus distop dengan -1
+  if(answer.trim().toLowerCase() == dataJson[next].term.toLowerCase()){
+    console.log('damn you are right!! There are another questions tho ');
+    next++;
+
+  } else {
+    console.log('salah');
+  }
+  if(dataJson.length > next){
+    rl.setPrompt(`soal:  ${dataJson[next].definition}  \nJawaban: `);
     rl.prompt();
   }else {
     console.log('anda menang');
