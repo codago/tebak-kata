@@ -9,10 +9,6 @@ data = JSON.parse(data)
 let count =0;
 console.log(data[count].definition);
 
-
-
-
-
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -21,7 +17,7 @@ const rl = readline.createInterface({
 
 
 rl.on('line', (answer) => {
-  if (count < data.length-1){
+
     if(answer.trim().toLowerCase() == data[count].term.toLowerCase()){
       console.log('Selamat Anda Benar!');
       count++
@@ -29,8 +25,9 @@ rl.on('line', (answer) => {
       console.log('WKWKW Anda Kurang Beruntung!');
     }
 
-
+if (count < data.length){
     console.log(data[count].definition);
+    rl.prompt();
 
   }else {
 
