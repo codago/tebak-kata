@@ -2,19 +2,15 @@
 
 const fs = require("fs");
 const readline = require('readline');
-var dataJson = JSON.parse(fs.readFileSync("data.json", "utf8"));
-var panjang = dataJson.length - 1;
+var data = JSON.parse(fs.readFileSync("data.json", "utf8"));
+var panjang = data.length - 1;
 var x = 0;
 
 console.log("WELCOME MA NIGGA!." + "THIS IS A SIMPLE QUESTION FOR YA" +
              "\nU WILL GET THE QUESTION FROM THE 'data.json'." + "ANSWER THE QUESTION CORRECTLY!!");
 
-if(process.argv[2] === undefined || process.argv[2].toLowerCase() !=="data.json")
-{
- console.log("\nPLEASE NIGGA, PUT THE NAME OF FILE AS THE INPUT OF THE QUESTION");
- console.log("Ex. 'node tebak-kata.js data.json'")
- process.exit();
-}
+question();
+
 
 function question()
  {
@@ -22,14 +18,14 @@ function question()
       {
         input: process.stdin,
         output: process.stdout,
-        prompt: "Question: " + dataJson[x].definition + "\nYA ANSWER??: "
+        prompt: "Question: " + data[x].definition + "\nYA ANSWER??: "
     });
     rl.prompt();
-console.log("Question: " + dataJson[x].definition + "\nYA ANSWER??: ");
+console.log("Question: " + data[x].definition + "\nYA ANSWER??: ");
 
     rl.on('line', (userAnswer) => {
         if (x === panjang) {
-            if (userAnswer.trim().toLowerCase() === dataJson[x].term.toLowerCase())
+            if (userAnswer.trim().toLowerCase() === data[x].term.toLowerCase())
             {
                 console.log("CONGRATZ U ARE RIGHT DAWG!");
                 console.log("\nWOW YA WIN A BIKE NIGGA");
@@ -38,11 +34,11 @@ console.log("Question: " + dataJson[x].definition + "\nYA ANSWER??: ");
             }
         }
 
-        if (userAnswer.trim().toLowerCase() === dataJson[x].term.toLowerCase())
+        if (userAnswer.trim().toLowerCase() === data[x].term.toLowerCase())
         {
             x++;
             console.log("DAMN U RIGHT NIGGA!");
-            rl.setPrompt("Question: " + dataJson[x].definition + "\nAnswer: ");
+            rl.setPrompt("Question: " + data[x].definition + "\nAnswer: ");
         } else
 
         {
@@ -58,4 +54,3 @@ console.log("Question: " + dataJson[x].definition + "\nYA ANSWER??: ");
        process.exit(0);
     })
 };
-question();
