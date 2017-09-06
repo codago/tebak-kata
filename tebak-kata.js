@@ -1,46 +1,36 @@
-"use strict"
-
-
-const fs = require('fs');
-const readline = require('readline');
-const rl = readline.createInterface({  input: process.stdin,  output: process.stdout });
-
-
-
-fs.readFile('data.json', 'utf-8', (err, data) =>{
-  if (err) throw err;
-
-  let isijson = JSON.parse(data)
-rl.question('Selamat datang di Permainan Tebak-kata, silahkan jawab dengan benar... \n', () => {
-
-  console.log(isijson[0].definition)
-  rl.question('Jawaban : ', (jawab) => {
-    if (isijson[0].term === jawab) {
-      console.log('selamat anda benar \n');
-    }else {
-      console.log('wkwk anda salah \n');
+"use strict";
+var readline = require('readline');
+var fs = require('fs');
+var datajson = JSON.parse(fs.readFileSync("data.json", "utf8"));
+var rl = readline.createInterface({input: process.stdin,output: process.stdout});
+var kondisi = true;
+var tanya = 0;
+console.log('Selamat datang di Permainan Tebak-kata, silahkan jawab dengan benar... \n');
+function cekjawaban(pertanyaan, jawaban) {
+  if (pertanyaan.trim().toUpperCase() === jawaban.toUpperCase()) {
+    console.log("selamat anda benar\n");
+    return true;
+  }
+  else {
+    console.log("maaf anda salah \n")
+    return true;
+  }
+}
+console.log("Pertanyaan : " + datajson[tanya].definition);
+rl.setPrompt('Jawaban : ' );
+rl.prompt();
+rl.on('line', function(line) {
+  if(tanya === datajson.length) {
+    console.log("Hore Anda Menang!");
+    rl.close();
+  } else {
+    kondisi = cekjawaban(line, datajson[tanya].term);
+    if(kondisi === true) {
+      tanya++;
     }
-
-     console.log(isijson[1].definition)
-     rl.question('Jawaban : ', (jawab) => {
-       if (isijson[1].term === jawab) {
-        console.log('selamat anda benar \n');
-      }else {
-         console.log('wkwk anda salah \n');
-       }
-
-      console.log(isijson[2].definition)
-       rl.question('Jawaban : ', (jawab) => {
-         if (isijson[2].term === jawab) {
-           console.log('selamat anda benar \n');
-         }else {
-           console.log('wkwk anda salah \n');
-         }
-
-         rl.question('Hore Anda Menang !', () => {rl.close();});
-
-        });
-     });
-  });
-})
+    if(tanya < datajson.length) {
+      console.log("Pertanyaan : " + datajson[tanya].definition);
+      rl.prompt();
+    }
+  }
 })
