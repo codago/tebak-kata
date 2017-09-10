@@ -13,7 +13,7 @@ function cekjawaban(pertanyaan, jawaban) {
   }
   else {
     console.log("maaf anda salah \n")
-    return true;
+    return false;
   }
 }
 console.log("Pertanyaan : " + datajson[tanya].definition);
